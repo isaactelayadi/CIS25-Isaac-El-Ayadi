@@ -1,0 +1,59 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class Item {
+private:
+    string name;
+    int quantity;
+
+public:
+    void setData(string itemName, int qty) {
+        name = itemName;
+        quantity = qty;
+    }
+
+    void saveToFile(const string& filename) {
+        ofstream outFile(filename);
+
+        if (!outFile) {
+            cout << "Error opening file for writing.\n";
+            return;
+        }
+
+        outFile << name << "," << quantity << endl;
+        outFile.close();
+        cout << "Data saved to " << filename << endl;
+    }
+
+    void loadFromFile(const string& filename) {
+        ifstream inFile(filename);
+
+        if (!inFile) {
+            cout << "Error opening file for reading.\n";
+            return;
+        }
+
+        string line;
+        cout << "Reading from " << filename << ":\n";
+
+        while (getline(inFile, line)) {
+            cout << line << endl;
+        }
+
+        inFile.close();
+    }
+};
+
+int main() {
+    Item tool;
+
+    tool.setData("Water Bottle", 1738);
+
+    tool.saveToFile("items.txt");
+
+    tool.loadFromFile("items.txt");
+
+    return 0;
+}
