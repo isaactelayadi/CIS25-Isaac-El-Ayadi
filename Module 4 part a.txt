@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int option;
+
+    cout << "--- Main Menu ---\n";
+    cout << "1. Start Game\n";
+    cout << "2. Settings\n";
+    cout << "3. Quit\n";
+
+    cout << "Enter your choice: ";
+    cin >> option;
+
+    if (option == 1) {
+        cout << "Game starting\n";
+    }
+    else if (option == 2) {
+        cout << "Opening settings\n";
+    }
+    else if (option == 3) {
+        cout << "Goodbye!\n";
+    }
+    else {
+        cout << "That is not a valid selection.\n";
+    }
+
+    return 0;
+}
