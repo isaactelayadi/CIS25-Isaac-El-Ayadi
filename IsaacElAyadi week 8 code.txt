@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+class BankAccount {
+private:
+    double balance;
+
+public:
+    BankAccount(double startingBalance = 0.0) {
+        balance = startingBalance;
+    }
+
+    void addFunds(double amount) {
+        balance += amount;
+        cout << "Deposit has been completed! $" << amount << endl;
+        recordTransaction("Deposit", amount);
+    }
+
+    void buyItem(const string& itemName, double price) {
+        if (price > balance) {
+            cout << "Cannot purchase '" << itemName << "Not enough funds" << endl;
+        } else {
+            balance -= price;
+            cout << "You bought: " << itemName << " for $" << price << endl;
+            recordTransaction("Purchase: " + itemName, price);
+        }
+    }
+
+    void showBalance() const {
+        cout << "Available balance is: $" << balance << endl;
+    }
+
+    void recordTransaction(const string& action, double amount) const {
+        ofstream out("transactions.txt", ios::app);
+
+        if (out) {
+            out << action << " | Amount: $" << amount << endl;
+        }
+        out.close();
+    }
+};
+
+int main() {
+    BankAccount acc; 
+
+    acc.addFunds(150.00);          
+    acc.buyItem("Chick Fil A", 8.57);   
+    acc.buyItem("Soccer Cleats", 88.88); 
+    acc.buyItem("Arc'Teryx bad", 52.54);
+
+    acc.showBalance();             
+
+    cout << "All activity saved to transactions.txt" << endl;
+    return 0;
+}
